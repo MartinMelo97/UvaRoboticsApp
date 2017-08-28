@@ -20,15 +20,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private static Button BtnActivar, BtnPanico, BtnUbicacion;
-    private static String cellphone_number="7226034510";
+    private static String cellphone_number="7228027950";
 
     //Codigo de permiso
-    private static final int REQUEST_CALL_PHONE = 1;
-    private static final int REQUEST_SEND_SMS = 0;
-    private static final int REQUEST_LOCATION = 1;
+    //private static final int REQUEST_CALL_PHONE = 1;
+    //private static final int REQUEST_SEND_SMS = 0;
+    //private static final int REQUEST_LOCATION = 1;
+    private static final int CODE_REQUESTS = 1;
     private static LocationManager locationManager;
     private static String latitud, longitud;
 
@@ -36,14 +40,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        checkPermisos();
         //Instanciamos botones
         BtnActivar = (Button) findViewById(R.id.BtnActivar);
         BtnPanico = (Button) findViewById(R.id.BtnPanico);
         BtnUbicacion = (Button) findViewById(R.id.BtnUbicacion);
 
-        requestPermission(Manifest.permission.SEND_SMS, REQUEST_SEND_SMS);
-        requestPermission(Manifest.permission.ACCESS_FINE_LOCATION, REQUEST_LOCATION);
+        //requestPermission(Manifest.permission.SEND_SMS, REQUEST_SEND_SMS);
+        //requestPermission(Manifest.permission.ACCESS_FINE_LOCATION, REQUEST_LOCATION);
 
 
         BtnPanico.setOnClickListener(new View.OnClickListener() {
@@ -68,10 +72,37 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    public void checkPermisos()
+    {
+        int permissionSMS = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
+        int permissionLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int permissionCall = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
+
+        List<String> permissionsRequests = new ArrayList<>();
+        if(permissionSMS != PackageManager.PERMISSION_GRANTED)
+        {
+            permissionsRequests.add(Manifest.permission.SEND_SMS);
+        }
+
+        if(permissionCall != PackageManager.PERMISSION_GRANTED)
+        {
+            permissionsRequests.add(Manifest.permission.CALL_PHONE);
+        }
+
+        if(permissionLocation != PackageManager.PERMISSION_GRANTED)
+        {
+            permissionsRequests.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+
+        if(!permissionsRequests.isEmpty())
+        {
+            ActivityCompat.requestPermissions(this, permissionsRequests.toArray(new String[permissionsRequests.size()]), CODE_REQUESTS);
+        }
+    }
 
     public void llamar()
     {
-        requestPermission(Manifest.permission.CALL_PHONE, REQUEST_CALL_PHONE);
+        //requestPermission(Manifest.permission.CALL_PHONE, REQUEST_CALL_PHONE);
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:"+cellphone_number));
         if(ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
@@ -87,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         //Toast.makeText(this, concat+" (UBICACION "+latitud+", "+longitud+")", Toast.LENGTH_SHORT).show();
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(cellphone_number, null, concat+" (UBICACION "+latitud+", "+longitud+")", null, null);
+        Toast.makeText(this, "Mensaje enviado exitosamente", Toast.LENGTH_SHORT).show();
     }
 
     public void obtenerUbicacion(boolean llamar, boolean mensaje, String paraConcatenar)
@@ -102,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this,
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+                //ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
             }
             else
             {
@@ -138,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
     {
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(cellphone_number, null, "(EXTRAER_UBICACION)", null, null);
+        Toast.makeText(this, "Mensaje enviado exitosamente", Toast.LENGTH_SHORT).show();
     }
 
     protected void alertNoGPSOn()
@@ -161,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
 
-    protected void requestPermission(String permissionType, int requestCode)
+   /* protected void requestPermission(String permissionType, int requestCode)
     {
         int permissionint = ContextCompat.checkSelfPermission(this, permissionType);
 
@@ -169,9 +202,9 @@ public class MainActivity extends AppCompatActivity {
         {
             ActivityCompat.requestPermissions(this, new String[]{permissionType}, requestCode);
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
     {
         switch (requestCode) {
@@ -191,5 +224,5 @@ public class MainActivity extends AppCompatActivity {
             break;
 
         }
-    }
+    }*/
 }
