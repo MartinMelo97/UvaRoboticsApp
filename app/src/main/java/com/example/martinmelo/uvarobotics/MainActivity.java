@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -26,7 +28,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static Button BtnActivar, BtnPanico, BtnUbicacion;
-    private static String cellphone_number="7228027950";
+    private static String cellphone_number="";
 
     //Codigo de permiso
     //private static final int REQUEST_CALL_PHONE = 1;
@@ -40,11 +42,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        checkIfNumberInDatabase();
         checkPermisos();
         //Instanciamos botones
         BtnActivar = (Button) findViewById(R.id.BtnActivar);
         BtnPanico = (Button) findViewById(R.id.BtnPanico);
         BtnUbicacion = (Button) findViewById(R.id.BtnUbicacion);
+
 
         //requestPermission(Manifest.permission.SEND_SMS, REQUEST_SEND_SMS);
         //requestPermission(Manifest.permission.ACCESS_FINE_LOCATION, REQUEST_LOCATION);
@@ -70,6 +74,22 @@ public class MainActivity extends AppCompatActivity {
                 getUbicacion();
             }
         });
+
+
+    }
+    public void checkIfNumberInDatabase()
+    {
+        final DataBaseManager managerRead = new DataBaseManager(MainActivity.this, "read");
+        Cursor number = managerRead.lookingForNumber();
+        if(number.moveToFirst())
+        {
+            cellphone_number = number.getString(1);
+        }
+        else
+        {
+            Intent intento = new Intent(getApplicationContext(), SetNumberActivity.class);
+            startActivity(intento);
+        }
 
     }
     public void checkPermisos()

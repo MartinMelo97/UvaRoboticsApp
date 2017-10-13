@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">UvaRobotics</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="TextEnterNumber">Ingrese el numero de la alarma principal</string>
+    <string name="BtnSaveNumber">Guardar numero</string>
+    <string name="TxtBienvenida">¡Bienvenido(a)!</string>
+    <string name="TxtThanks">Gracias por adquirir un producto de Uva Robotics</string>
 </resources>
