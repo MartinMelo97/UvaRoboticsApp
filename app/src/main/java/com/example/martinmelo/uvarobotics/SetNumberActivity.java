@@ -1,6 +1,7 @@
 package com.example.martinmelo.uvarobotics;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +32,9 @@ public class SetNumberActivity extends AppCompatActivity {
                     DataBaseHelper helper = new DataBaseHelper(getApplicationContext());
                     ContentValues valores = helper.generarContentValuesNumbers(number);
                     manager.insertNumber(valores, "numbers");
+                    Intent intento = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intento);
+                    finish();
 
                 }
                 else

@@ -43,7 +43,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkIfNumberInDatabase();
-        checkPermisos();
+        Log.d("A ver",cellphone_number);
+        if(cellphone_number.length() > 9)
+        {
+            Log.d("Frepo","Entro");
+            checkPermisos();
+        }
+
         //Instanciamos botones
         BtnActivar = (Button) findViewById(R.id.BtnActivar);
         BtnPanico = (Button) findViewById(R.id.BtnPanico);
@@ -83,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor number = managerRead.lookingForNumber();
         if(number.moveToFirst())
         {
+            Log.d("llego perro","llego perro");
             cellphone_number = number.getString(1);
         }
         else
