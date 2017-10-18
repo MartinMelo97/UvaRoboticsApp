@@ -58,4 +58,9 @@ public class DataBaseManager {
     {
         db.insert(table, null, values);
     }
+
+    public void updateNumber(ContentValues values, String table)
+    {
+        db.update(table, values, "_id=1", null);
+    }
 }
