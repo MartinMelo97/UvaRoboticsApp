@@ -5,4 +5,7 @@
     <string name="BtnSaveNumber">Guardar numero</string>
     <string name="TxtBienvenida">¡Bienvenido(a)!</string>
     <string name="TxtThanks">Gracias por adquirir un producto de Uva Robotics</string>
+    <string name="EditNumber">Ingrese el nuevo numero de la alarma principal</string>
+    <string name="NumeroActual">Numero actual:</string>
+    <string name="ShowActualNumber">Mostrar numero actual</string>
 </resources>

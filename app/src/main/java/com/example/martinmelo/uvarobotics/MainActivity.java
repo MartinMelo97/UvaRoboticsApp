@@ -9,7 +9,11 @@ import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -29,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static Button BtnActivar, BtnPanico, BtnUbicacion;
     private static String cellphone_number="";
+    private static com.github.clans.fab.FloatingActionMenu menu;
+    private static com.github.clans.fab.FloatingActionButton fabChangeNumber;
 
     //Codigo de permiso
     //private static final int REQUEST_CALL_PHONE = 1;
@@ -43,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkIfNumberInDatabase();
+
         Log.d("A ver",cellphone_number);
         if(cellphone_number.length() > 9)
         {
@@ -50,12 +57,14 @@ public class MainActivity extends AppCompatActivity {
             checkPermisos();
         }
 
+
+
         //Instanciamos botones
         BtnActivar = (Button) findViewById(R.id.BtnActivar);
         BtnPanico = (Button) findViewById(R.id.BtnPanico);
         BtnUbicacion = (Button) findViewById(R.id.BtnUbicacion);
-
-
+        menu = (com.github.clans.fab.FloatingActionMenu) findViewById(R.id.menu);
+        fabChangeNumber = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.menu_item);
         //requestPermission(Manifest.permission.SEND_SMS, REQUEST_SEND_SMS);
         //requestPermission(Manifest.permission.ACCESS_FINE_LOCATION, REQUEST_LOCATION);
 
@@ -78,6 +87,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getUbicacion();
+            }
+        });
+
+        fabChangeNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intento = new Intent(getApplicationContext(), ChangeNumber.class);
+                startActivity(intento);
             }
         });
 
