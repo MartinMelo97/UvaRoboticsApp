@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
     {
         //Toast.makeText(this, concat+" (UBICACION "+latitud+", "+longitud+")", Toast.LENGTH_SHORT).show();
         SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(cellphone_number, null, concat+" (UBICACION "+latitud+", "+longitud+")", null, null);
+        sms.sendTextMessage(cellphone_number, null," (UBICACION "+latitud+", "+longitud+")", null, null);
         Toast.makeText(this, "Mensaje enviado exitosamente", Toast.LENGTH_SHORT).show();
     }
 
