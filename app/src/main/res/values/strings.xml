@@ -8,4 +8,7 @@
     <string name="EditNumber">Ingrese el nuevo numero de la alarma principal</string>
     <string name="NumeroActual">Numero actual:</string>
     <string name="ShowActualNumber">Mostrar numero actual</string>
+    <string name="PanicoButtonText">Panico</string>
+    <string name="AlertaButtonText">Alerta</string>
+    <string name="QuienButtonText">¿Quien pide auxilio?</string>
 </resources>

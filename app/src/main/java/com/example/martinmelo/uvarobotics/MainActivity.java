@@ -8,24 +8,18 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Build;
+import android.os.CountDownTimer;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,29 +29,25 @@ public class MainActivity extends AppCompatActivity {
     private static String cellphone_number="";
     private static com.github.clans.fab.FloatingActionMenu menu;
     private static com.github.clans.fab.FloatingActionButton fabChangeNumber;
-
-    //Codigo de permiso
-    //private static final int REQUEST_CALL_PHONE = 1;
-    //private static final int REQUEST_SEND_SMS = 0;
-    //private static final int REQUEST_LOCATION = 1;
     private static final int CODE_REQUESTS = 1;
     private static LocationManager locationManager;
     private static String latitud, longitud;
+    private static int clickPanico = 0, clicksAlerta = 0, clicksQuien = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         checkIfNumberInDatabase();
 
         Log.d("A ver",cellphone_number);
+
         if(cellphone_number.length() > 9)
         {
             Log.d("Frepo","Entro");
             checkPermisos();
         }
-
-
 
         //Instanciamos botones
         BtnActivar = (Button) findViewById(R.id.BtnActivar);
@@ -73,13 +63,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 obtenerUbicacion(true, true, "");
+                clickPanico += 1;
+                checkPanico();
             }
         });
 
         BtnActivar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                obtenerUbicacion(false, true, "(ACTIVAR)");
+                obtenerUbicacion(false, true, "(ALERTA)");
+                clicksAlerta += 1;
+               checkAlerta();
             }
         });
 
@@ -87,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getUbicacion();
+                clicksQuien += 1;
+                checkQuien();
             }
         });
 
@@ -214,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
     protected  void getUbicacion()
     {
         SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(cellphone_number, null, "(EXTRAER_UBICACION)", null, null);
+        sms.sendTextMessage(cellphone_number, null, "(QUIEN)", null, null);
         Toast.makeText(this, "Mensaje enviado exitosamente", Toast.LENGTH_SHORT).show();
     }
 
@@ -237,6 +233,75 @@ public class MainActivity extends AppCompatActivity {
                 });
         final AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    public void checkPanico()
+    {
+        if(clickPanico >= 2)
+        {
+            BtnPanico.setEnabled(false);
+            BtnPanico.setBackgroundColor(getResources().getColor(R.color.disabledd));
+            CountDownTimer buttonTimer = new CountDownTimer(15000, 1000) {
+                @Override
+                public void onTick(long l) {
+                    BtnPanico.setText(""+l/1000);
+                }
+
+                @Override
+                public void onFinish() {
+                    BtnPanico.setText(R.string.PanicoButtonText);
+                    BtnPanico.setEnabled(true);
+                    BtnPanico.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                }
+            }.start();
+            clickPanico = 0;
+        }
+    }
+
+    public void checkAlerta()
+    {
+        if(clicksAlerta >= 2)
+        {
+            BtnActivar.setEnabled(false);
+            BtnActivar.setBackgroundColor(getResources().getColor(R.color.disabledd));
+            CountDownTimer buttonTimer = new CountDownTimer(15000, 1000) {
+                @Override
+                public void onTick(long l) {
+                    BtnActivar.setText(""+l/1000);
+                }
+
+                @Override
+                public void onFinish() {
+                    BtnActivar.setText(R.string.AlertaButtonText);
+                    BtnActivar.setEnabled(true);
+                    BtnActivar.setBackgroundColor(getResources().getColor(R.color.colorActivate));
+                }
+            }.start();
+            clicksAlerta = 0;
+        }
+    }
+
+    public void checkQuien()
+    {
+        if(clicksQuien >= 2)
+        {
+            BtnUbicacion.setEnabled(false);
+            BtnUbicacion.setBackgroundColor(getResources().getColor(R.color.disabledd));
+            CountDownTimer buttonTimer = new CountDownTimer(15000, 1000) {
+                @Override
+                public void onTick(long l) {
+                    BtnUbicacion.setText(""+l/1000);
+                }
+
+                @Override
+                public void onFinish() {
+                    BtnUbicacion.setText(R.string.QuienButtonText);
+                    BtnUbicacion.setEnabled(true);
+                    BtnUbicacion.setBackgroundColor(getResources().getColor(R.color.colorUbicacion));
+                }
+            }.start();
+            clicksQuien = 0;
+        }
     }
 
    /* protected void requestPermission(String permissionType, int requestCode)

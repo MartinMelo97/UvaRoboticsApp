@@ -21,7 +21,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run()
             {
                 try {
-                    sleep(2000);
+                    sleep(500);
                     Intent intento = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intento);
                     finish();

@@ -10,7 +10,7 @@
         android:id="@+id/imageView"
         android:layout_width="294dp"
         android:layout_height="483dp"
-        app:srcCompat="@drawable/disquelogo"
+        app:srcCompat="@drawable/logo_remasterizado"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
