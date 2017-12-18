@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Spoolbu</string>
+    <string name="app_name">AlconTech</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="TextEnterNumber">Ingrese el numero de la alarma principal</string>
     <string name="BtnSaveNumber">Guardar numero</string>

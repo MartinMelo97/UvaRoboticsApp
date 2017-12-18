@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void llamar()
+    /*public void llamar()
     {
         //requestPermission(Manifest.permission.CALL_PHONE, REQUEST_CALL_PHONE);
         Intent callIntent = new Intent(Intent.ACTION_CALL);
@@ -155,24 +155,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         startActivity(callIntent);
-    }
+    }*/
 
     public void mandarUbicacionSMS(String latitud, String longitud, String concat)
     {
-        //Toast.makeText(this, concat+" (UBICACION "+latitud+", "+longitud+")", Toast.LENGTH_SHORT).show();
-        SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(cellphone_number, null," (UBICACION "+latitud+", "+longitud+")", null, null);
+        Toast.makeText(this, concat+" (UBICACION "+latitud+", "+longitud+")", Toast.LENGTH_SHORT).show();
+        //SmsManager sms = SmsManager.getDefault();
+        //sms.sendTextMessage(cellphone_number, null," (UBICACION "+latitud+", "+longitud+")", null, null);
         Toast.makeText(this, "Mensaje enviado exitosamente", Toast.LENGTH_SHORT).show();
     }
 
     public void obtenerUbicacion(boolean llamar, boolean mensaje, String paraConcatenar)
     {
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
         {
             alertNoGPSOn();
         }
-        else if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        else if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
         {
             if(ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this,
@@ -183,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
             else
             {
                 Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
                 if(location != null)
                 {
                     double latti = location.getLatitude();
@@ -197,10 +197,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            if(llamar == true)
+            /*if(llamar == true)
             {
                 llamar();
-            }
+            }*/
 
             if(mensaje == true)
             {
@@ -208,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+
     }
 
     protected  void getUbicacion()
