@@ -55,14 +55,11 @@ public class MainActivity extends AppCompatActivity {
         BtnUbicacion = (Button) findViewById(R.id.BtnUbicacion);
         menu = (com.github.clans.fab.FloatingActionMenu) findViewById(R.id.menu);
         fabChangeNumber = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.menu_item);
-        //requestPermission(Manifest.permission.SEND_SMS, REQUEST_SEND_SMS);
-        //requestPermission(Manifest.permission.ACCESS_FINE_LOCATION, REQUEST_LOCATION);
-
 
         BtnPanico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                obtenerUbicacion(true, true, "");
+                obtenerUbicacion(true, true, "PANICO");
                 clickPanico += 1;
                 checkPanico();
             }
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         BtnActivar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                obtenerUbicacion(false, true, "(ALERTA)");
+                obtenerUbicacion(false, true, "ALERTA");
                 clicksAlerta += 1;
                checkAlerta();
             }
@@ -140,24 +137,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*public void llamar()
-    {
-        //requestPermission(Manifest.permission.CALL_PHONE, REQUEST_CALL_PHONE);
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:"+cellphone_number));
-        if(ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
-        {
-            return;
-        }
-
-        startActivity(callIntent);
-    }*/
-
     public void mandarUbicacionSMS(String latitud, String longitud, String concat)
     {
-        Toast.makeText(this, concat+" (UBICACION "+latitud+", "+longitud+")", Toast.LENGTH_SHORT).show();
-        //SmsManager sms = SmsManager.getDefault();
-        //sms.sendTextMessage(cellphone_number, null," (UBICACION "+latitud+", "+longitud+")", null, null);
+        //Toast.makeText(this, " ("+concat+" "+latitud+", "+longitud+")", Toast.LENGTH_SHORT).show();
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(cellphone_number, null," ("+concat+" "+latitud+", "+longitud+")", null, null);
         Toast.makeText(this, "Mensaje enviado exitosamente", Toast.LENGTH_SHORT).show();
     }
 
@@ -175,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this,
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             {
-                //ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
             }
             else
             {
@@ -192,11 +175,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "No se puedo trackear tu ubicacion", Toast.LENGTH_SHORT).show();
                 }
             }
-
-            /*if(llamar == true)
-            {
-                llamar();
-            }*/
 
             if(mensaje == true)
             {
@@ -303,36 +281,4 @@ public class MainActivity extends AppCompatActivity {
             clicksQuien = 0;
         }
     }
-
-   /* protected void requestPermission(String permissionType, int requestCode)
-    {
-        int permissionint = ContextCompat.checkSelfPermission(this, permissionType);
-
-        if(permissionint != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(this, new String[]{permissionType}, requestCode);
-        }
-    }*/
-
-    /*@Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
-    {
-        switch (requestCode) {
-            case REQUEST_CALL_PHONE:
-
-                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Se necesita el permiso de llamada", Toast.LENGTH_SHORT).show();
-                }
-
-            break;
-
-            case REQUEST_SEND_SMS:
-
-                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Se necesita el permiso de SMS", Toast.LENGTH_SHORT).show();
-                }
-            break;
-
-        }
-    }*/
 }
