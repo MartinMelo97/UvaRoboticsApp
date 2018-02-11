@@ -261,11 +261,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void checkQuien()
     {
-        if(clicksQuien >= 2)
+        if(clicksQuien >= 1)
         {
             BtnUbicacion.setEnabled(false);
             BtnUbicacion.setBackgroundColor(getResources().getColor(R.color.disabledd));
-            CountDownTimer buttonTimer = new CountDownTimer(15000, 1000) {
+            CountDownTimer buttonTimer = new CountDownTimer(30000, 1000) {
                 @Override
                 public void onTick(long l) {
                     BtnUbicacion.setText(""+l/1000);

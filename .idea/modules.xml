@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/UvaRobotics.iml" filepath="$PROJECT_DIR$/UvaRobotics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UvaRoboticsApp.iml" filepath="$PROJECT_DIR$/UvaRoboticsApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -11,4 +11,5 @@
     <string name="PanicoButtonText">Panico</string>
     <string name="AlertaButtonText">Alerta</string>
     <string name="QuienButtonText">¿Quien pide auxilio?</string>
+    <string name="TerminosCondiciones">Copyright, 2017, SPOOLBU y Jonathan Espinoza Gutierrez.</string>
 </resources>
